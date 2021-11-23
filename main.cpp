@@ -1,7 +1,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+
 #include "array.h"
+#include "print_num.h"
 
 static const uint32_t ARR_SIZE = 5;
 
@@ -18,6 +20,10 @@ int main() {
   print_array(arr1, len1);
   
   free(arr1);
+  
+  uint32_t num = 56;
+  const uint32_t base = 10;
+  print_num(num, base);
 
   return 0;
 }
