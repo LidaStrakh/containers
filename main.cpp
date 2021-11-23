@@ -1,7 +1,9 @@
+// g++ -g -Wall -Wextra -O2 -c main.cpp -o main.o && g++ main.o array.o -o main && ./main
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include "array.h"
+#include "list.h"
 
 static const uint32_t ARR_SIZE = 5;
 
@@ -18,6 +20,22 @@ int main() {
   print_array(arr1, len1);
   
   free(arr1);
+
+  list_t l; 
+  list_init(&l);
+  
+  for (uint32_t n = 32; n != 53; ++n) {
+    list_add_back(&l, n);
+  }
+  
+  list_add_back(&l, 53);
+  list_add_back(&l, 6);
+  list_add_front(&l, 2);
+
+  list_print(&l);
+  list_print_reverse(&l);
+
+  list_free_rec(&l);
 
   return 0;
 }
