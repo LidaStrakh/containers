@@ -1,9 +1,9 @@
-// g++ -g -Wall -Wextra -O2 -c main.cpp -o main.o && g++ main.o array.o -o main && ./main
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include "array.h"
 #include "list.h"
+#include "print_num.h"
 
 static const uint32_t ARR_SIZE = 5;
 
@@ -20,6 +20,10 @@ int main() {
   print_array(arr1, len1);
   
   free(arr1);
+  
+  uint32_t num = 56;
+  const uint32_t base = 10;
+  print_num(num, base);
 
   list_t l; 
   list_init(&l);
