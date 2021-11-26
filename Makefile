@@ -9,11 +9,8 @@ all : main
 $(OBJS) : %.o : %.cpp %.h
 	g++ $(CFLAGS) -c $< -o $@
 
-main.o : main.cpp
-	g++ $(CFLAGS) -c main.cpp -o main.o
-
-main : main.o $(OBJS)
-	g++ $(LDFLAGS) main.o $(OBJS) -o main
+main : main.cpp $(OBJS)
+	g++ $(CFLAGS) main.cpp $(OBJS) -o main
 
 clean :
 	rm *.o main
