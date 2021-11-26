@@ -13,5 +13,5 @@ main : main.cpp $(OBJS)
 	g++ $(CFLAGS) main.cpp $(OBJS) -o main
 
 clean :
-	rm *.o main
+	rm $(OBJS) main
 
