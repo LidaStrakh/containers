@@ -18,4 +18,6 @@ main.o : main.cpp
 main : main.o list.o array.o print_num.o
 	g++ $(LDFLAGS) main.o array.o list.o print_num.o -o main
 
+clean :
+	rm *.o main
 
