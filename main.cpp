@@ -31,12 +31,13 @@ int main() {
   list_init(&l);
   
   for (uint32_t n = 32; n != 53; ++n) {
-    list_add_back(&l, n);
+    list_add_num_back(&l, n);
   }
   
-  list_add_back(&l, 53);
-  list_add_back(&l, 6);
-  list_add_front(&l, 2);
+  list_add_num_back(&l, 53);
+  list_add_num_back(&l, 6);
+  list_add_num_front(&l, 2);
+  list_add_str_back(&l, "hahaha");
 
   list_print(&l);
   list_print_reverse(&l);
