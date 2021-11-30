@@ -1,17 +1,20 @@
 CFLAGS := -g -O2 -Wall -Wextra -fsanitize=address -fsanitize=leak
 LDFLAGS := -fsanitize=address -fsanitize=leak
 
-SRCS := print_num.cpp list.cpp array.cpp variant.cpp
+SRCS := print_num.cpp list.cpp array.cpp variant.cpp main.cpp
 OBJS := $(patsubst %.cpp,%.o,$(SRCS))
+DEPS := $(patsubst %.cpp,%.d,$(SRCS))
 
 all : main
 
-$(OBJS) : %.o : %.cpp %.h
-	g++ $(CFLAGS) -c $< -o $@
+-include $(DEPS)
 
-main : main.cpp $(OBJS)
-	g++ $(CFLAGS) main.cpp $(OBJS) -o main
+$(OBJS) : %.o : %.cpp 
+	g++ $(CFLAGS) -c -MMD $< -o $@
+
+main : $(OBJS)
+	g++ $(LDFLAGS) $(OBJS) -o main
 
 clean :
-	rm $(OBJS) main
+	rm $(OBJS) main $(DEPS)
 
