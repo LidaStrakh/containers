@@ -2,26 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "list.h"
-
-enum dynelem_type_t {
-  DYNELEM_STR,
-  DYNELEM_NUM,
-  DYNELEM_BLN
-};
-
-union dynelem_info_t {
-  const char* str;
-  uint32_t num;
-  bool bln;
-};
-
-struct dynelem_t {
-  dynelem_type_t type;
-  dynelem_info_t info; 
-}; 
+#include "variant.h"
 
 struct list_elem_t {
-  dynelem_t elem;
+  variant_t elem;
   list_elem_t* next;
 };
 
@@ -45,23 +29,9 @@ void list_free_rec(list_t* list) {
   do_list_free_rec(list->head);
 }
 
-static void print_elem(const dynelem_t* elem) {
-  switch (elem->type) {
-    case DYNELEM_STR:
-      printf("\"%s\"", elem->info.str);
-      break;
-    case DYNELEM_NUM:
-      printf("%u", elem->info.num);
-      break;
-    case DYNELEM_BLN:
-      printf("%s", elem->info.bln ? "true" : "false");
-      break;
-  }
-} 
-
 void list_print(const list_t* list) {
   for (const list_elem_t* p = list->head; p != nullptr; p = p->next) {
-    print_elem(&(p->elem));
+    variant_print(&(p->elem));
     if (p->next != nullptr) { 
       printf(" -> ");
     } else {
@@ -78,7 +48,7 @@ static void list_print_reverse_rec(const list_elem_t* p) {
   if (p->next != nullptr) {
     printf(" <- ");
   }
-  print_elem(&(p->elem));
+  variant_print(&(p->elem));
 }
 
 void list_print_reverse(const list_t* list) {
@@ -88,24 +58,21 @@ void list_print_reverse(const list_t* list) {
 
 static list_elem_t* make_list_num_elem(uint32_t num, list_elem_t* next) {
   list_elem_t* e = (list_elem_t*)malloc(sizeof(list_elem_t));
-  e->elem.info.num = num;
-  e->elem.type = DYNELEM_NUM;
+  init_variant_number(&(e->elem), num);
   e->next = next;
   return e;
 }
 
 static list_elem_t* make_list_str_elem(const char* str, list_elem_t* next) {
   list_elem_t* e = (list_elem_t*)malloc(sizeof(list_elem_t));
-  e->elem.info.str = str;
-  e->elem.type = DYNELEM_STR;
+  init_variant_string(&(e->elem), str);
   e->next = next;
   return e;
 }
 
 static list_elem_t* make_list_bln_elem(bool bln, list_elem_t* next) {
   list_elem_t* e = (list_elem_t*)malloc(sizeof(list_elem_t));
-  e->elem.info.bln = bln;
-  e->elem.type = DYNELEM_BLN;
+  init_variant_bool(&(e->elem), bln);
   e->next = next;
   return e;
 }
