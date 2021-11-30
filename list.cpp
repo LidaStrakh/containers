@@ -3,10 +3,21 @@
 #include <stdlib.h>
 #include "list.h"
 
-struct dynelem_t {
+enum dynelem_type_t {
+  DYNELEM_STR,
+  DYNELEM_NUM,
+  DYNELEM_BLN
+};
+
+union dynelem_info_t {
   const char* str;
   uint32_t num;
-  bool is_num;
+  bool bln;
+};
+
+struct dynelem_t {
+  dynelem_type_t type;
+  dynelem_info_t info; 
 }; 
 
 struct list_elem_t {
@@ -35,10 +46,16 @@ void list_free_rec(list_t* list) {
 }
 
 static void print_elem(const dynelem_t* elem) {
-  if (elem->is_num) {
-    printf("%u", elem->num);
-  } else { 
-    printf("\"%s\"", elem->str);
+  switch (elem->type) {
+    case DYNELEM_STR:
+      printf("\"%s\"", elem->info.str);
+      break;
+    case DYNELEM_NUM:
+      printf("%u", elem->info.num);
+      break;
+    case DYNELEM_BLN:
+      printf("%s", elem->info.bln ? "true" : "false");
+      break;
   }
 } 
 
@@ -71,16 +88,24 @@ void list_print_reverse(const list_t* list) {
 
 static list_elem_t* make_list_num_elem(uint32_t num, list_elem_t* next) {
   list_elem_t* e = (list_elem_t*)malloc(sizeof(list_elem_t));
-  e->elem.num = num;
-  e->elem.is_num = true;
+  e->elem.info.num = num;
+  e->elem.type = DYNELEM_NUM;
   e->next = next;
   return e;
 }
 
 static list_elem_t* make_list_str_elem(const char* str, list_elem_t* next) {
   list_elem_t* e = (list_elem_t*)malloc(sizeof(list_elem_t));
-  e->elem.str = str;
-  e->elem.is_num = false;
+  e->elem.info.str = str;
+  e->elem.type = DYNELEM_STR;
+  e->next = next;
+  return e;
+}
+
+static list_elem_t* make_list_bln_elem(bool bln, list_elem_t* next) {
+  list_elem_t* e = (list_elem_t*)malloc(sizeof(list_elem_t));
+  e->elem.info.bln = bln;
+  e->elem.type = DYNELEM_BLN;
   e->next = next;
   return e;
 }
@@ -107,6 +132,20 @@ void list_add_str_back(list_t* list, const char* str) {
 
 void list_add_num_front(list_t* list, const char* str) {
   list_elem_t* l = make_list_str_elem(str, list->head);
+  list->head = l;
+  if (l->next == nullptr) {
+    list->ptail = &l->next;
+  }
+}
+
+void list_add_bln_back(list_t* list, bool bln) {
+  list_elem_t* l = make_list_bln_elem(bln, nullptr);
+  *list->ptail = l;
+  list->ptail = &l->next;
+}
+
+void list_add_bln_front(list_t* list, bool bln) {
+  list_elem_t* l = make_list_bln_elem(bln, list->head);
   list->head = l;
   if (l->next == nullptr) {
     list->ptail = &l->next;

@@ -18,6 +18,8 @@ void list_add_num_back(list_t* list, uint32_t num);
 void list_add_num_front(list_t* list, uint32_t num);
 void list_add_str_back(list_t* list, const char* str);
 void list_add_str_front(list_t* list, const char* str);
+void list_add_bln_back(list_t* list, bool bln);
+void list_add_bln_front(list_t* list, bool bln);
 void list_init(list_t* list);
 
 #endif // _LIST_H_
