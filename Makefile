@@ -1,7 +1,7 @@
 CFLAGS := -g -O2 -Wall -Wextra -fsanitize=address -fsanitize=leak
 LDFLAGS := -fsanitize=address -fsanitize=leak
 
-SRCS := print_num.cpp list.cpp array.cpp variant.cpp main.cpp
+SRCS := print_num.cpp array.cpp variant.cpp print.cpp main.cpp
 OBJS := $(patsubst %.cpp,%.o,$(SRCS))
 DEPS := $(patsubst %.cpp,%.d,$(SRCS))
 

@@ -5,6 +5,8 @@
 
 #include "array.h"
 #include "print_num.h"
+#include "variant.h"
+#include "print.h"
 #include "list.h"
 
 static const uint32_t ARR_SIZE = 5;
@@ -27,19 +29,28 @@ int main() {
   const uint32_t base = 10;
   print_num(num, base);
 
-  list_t l; 
-  list_init(&l);
+  list_t<uint32_t> l1;
+  list_init(&l1);
+  list_add_back(&l1, 18u);
+  list_add_back(&l1, 23u);
+  list_add_back(&l1, 47u);
+  list_add_front(&l1, 34u);
+  list_print(&l1);
+  list_print_reverse(&l1);
+  list_free(&l1);
+
+  list_t<variant_t> l2;
+  list_init(&l2);
+  variant_t vnum;
+  init_variant_number(&vnum, 56);
+  variant_t vbool;
+  init_variant_bool(&vbool, true);
+  list_add_back(&l2, vnum);
+  list_add_back(&l2, vbool);
+  list_add_front(&l2, vnum);
+  list_print(&l2);
+  list_print_reverse(&l2);
+  list_free(&l2);
   
-  list_add_num_back(&l, 53);
-  list_add_num_back(&l, 6);
-  list_add_num_front(&l, 2);
-  list_add_str_back(&l, "hahaha");
-  list_add_bln_back(&l, true);
-
-  list_print(&l);
-  list_print_reverse(&l);
-
-  list_free_rec(&l);
-
   return 0;
 }
