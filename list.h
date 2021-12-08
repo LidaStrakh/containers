@@ -12,18 +12,6 @@ template<typename T> struct list_elem_t {
 };
 
 template<typename T>
-struct list_t {
-  list_elem_t<T>*  head;
-  list_elem_t<T>** ptail;
-};
-
-template<typename T>
-void list_init(list_t<T>* list) {
-  list->head = nullptr;
-  list->ptail = &list->head;
-}
-
-template<typename T>
 static list_elem_t<T>* make_list_elem(const T& elem, list_elem_t<T>* next) {
   list_elem_t<T>* e = (list_elem_t<T>*)malloc(sizeof(list_elem_t<T>));
   e->elem = elem;
@@ -32,25 +20,51 @@ static list_elem_t<T>* make_list_elem(const T& elem, list_elem_t<T>* next) {
 }
 
 template<typename T>
-void list_add_back(list_t<T>* list, const T& elem) {
-  list_elem_t<T>* l = make_list_elem<T>(elem, nullptr);
-  *list->ptail = l;
-  list->ptail = &l->next;
-}
+class list_t {
+private:
+  list_elem_t<T>*  head;
+  list_elem_t<T>** ptail;
+
+  void print_reverse_rec(const list_elem_t<T>* p) const;
+
+public:
+  list_t(): head(nullptr), ptail(&this->head) {}
+  ~list_t();
+  void add_back(const T& elem);
+  void add_front(const T& elem);
+  void print() const;
+  void print_reverse() const;
+};
 
 template<typename T>
-void list_add_front(list_t<T>* list, const T& elem) {
-  list_elem_t<T>* l = make_list_elem(elem, list->head);
-  list->head = l;
-  if (l->next == nullptr) {
-    list->ptail = &l->next;
+list_t<T>::~list_t() {
+  for (list_elem_t<T>* p = this->head; p != nullptr;) {
+    list_elem_t<T>* q = p->next;
+    free(p);
+    p = q;
   }
 }
 
 template<typename T>
-void list_print(const list_t<T>* list) {
-  for (const list_elem_t<T>* p = list->head; p != nullptr; p = p->next) {
-    print(p->elem);
+void list_t<T>::add_back(const T& elem) {
+  list_elem_t<T>* l = make_list_elem<T>(elem, nullptr);
+  *this->ptail = l;
+  this->ptail = &l->next;
+}
+
+template<typename T>
+void list_t<T>::add_front(const T& elem) {
+  list_elem_t<T>* l = make_list_elem(elem, this->head);
+  this->head = l;
+  if (l->next == nullptr) {
+    this->ptail = &l->next;
+  }
+}
+
+template<typename T>
+void list_t<T>::print() const {
+  for (const list_elem_t<T>* p = this->head; p != nullptr; p = p->next) {
+    ::print(p->elem);
     if (p->next != nullptr) {
       printf(" -> ");
     } else {
@@ -60,30 +74,21 @@ void list_print(const list_t<T>* list) {
 }
 
 template<typename T>
-static void list_print_reverse_rec(const list_elem_t<T>* p) {
+void list_t<T>::print_reverse_rec(const list_elem_t<T>* p) const {
   if (p == nullptr) {
     return;
   }
-  list_print_reverse_rec(p->next);
+  print_reverse_rec(p->next);
   if (p->next != nullptr) {
     printf(" <- ");
   }
-  print(p->elem);
+  ::print(p->elem);
 }
 
 template<typename T>
-void list_print_reverse(const list_t<T>* list) {
-  list_print_reverse_rec(list->head);
+void list_t<T>::print_reverse() const {
+  print_reverse_rec(this->head);
   printf("\n");
-}
-
-template<typename T>
-void list_free(list_t<T>* list) {
-  for (list_elem_t<T>* p = list->head; p != nullptr;) {
-    list_elem_t<T>* q = p->next;
-    free(p);
-    p = q;
-  }
 }
 
 #endif // _LIST_H_

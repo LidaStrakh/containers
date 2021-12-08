@@ -30,27 +30,23 @@ int main() {
   print_num(num, base);
 
   list_t<uint32_t> l1;
-  list_init(&l1);
-  list_add_back(&l1, 18u);
-  list_add_back(&l1, 23u);
-  list_add_back(&l1, 47u);
-  list_add_front(&l1, 34u);
-  list_print(&l1);
-  list_print_reverse(&l1);
-  list_free(&l1);
+  l1.add_back(18u);
+  l1.add_back(23u);
+  l1.add_back(47u);
+  l1.add_front(34u);
+  l1.print();
+  l1.print_reverse();
 
   list_t<variant_t> l2;
-  list_init(&l2);
   variant_t vnum;
   init_variant_number(&vnum, 56);
   variant_t vbool;
   init_variant_bool(&vbool, true);
-  list_add_back(&l2, vnum);
-  list_add_back(&l2, vbool);
-  list_add_front(&l2, vnum);
-  list_print(&l2);
-  list_print_reverse(&l2);
-  list_free(&l2);
+  l2.add_back(vnum);
+  l2.add_back(vbool);
+  l2.add_front(vnum);
+  l2.print();
+  l2.print_reverse();
   
   return 0;
 }
