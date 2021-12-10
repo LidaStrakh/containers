@@ -3,28 +3,44 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "array.h"
+#include "vector.h"
 #include "print_num.h"
 #include "variant.h"
 #include "print.h"
 #include "list.h"
 
+
 static const uint32_t ARR_SIZE = 5;
 
 int main() {
   printf("Hello World!\n");
-  
-  uint32_t arr[ARR_SIZE] = {1, 34, 78, 6, 23};
-  
-  uint32_t len1 = 5;
-  uint32_t *arr1 = (uint32_t*)malloc(sizeof(uint32_t) * len1);
-  memcpy(arr1, arr, sizeof(uint32_t) * len1);
 
-  print_array(arr, ARR_SIZE);
-  print_array(arr1, len1);
+  vector_t<uint32_t> vec1;
+  vec1.add_back(36);
+  vec1.add_back(13);
+  vec1.add_back(53);
+  vec1.print();
+
+  variant_t var1;
+  init_variant_string(&var1, "rere");
+  variant_t var2;
+  init_variant_bool(&var2, true);
+  vector_t<variant_t> vec2(2); 
+  vec2.add_back(var1);
+  vec2.add_back(var2);
+  vec2.add_back(var1);
+  vec2.print();
+
+  vector_t<vector_t<uint32_t>> vec_vec(2);
+  vec_vec.add_back(vec1);
+  vec_vec.add_back(vec1);
+  vec_vec.print();
   
-  free(arr1);
-  
+  vector_t<vector_t<vector_t<uint32_t>>> vec_vec_vec(2);
+  vec_vec_vec.add_back(vec_vec);
+  vec_vec_vec.add_back(vec_vec);
+  vec_vec_vec.print();
+
   uint32_t num = 56;
   const uint32_t base = 10;
   print_num(num, base);
