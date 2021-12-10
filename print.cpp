@@ -7,5 +7,5 @@ void print(uint32_t num) {
 }
 
 void print(const variant_t& var) {
-  variant_print(&var);
+  var.print();
 }

@@ -21,10 +21,8 @@ int main() {
   vec1.add_back(53);
   vec1.print();
 
-  variant_t var1;
-  init_variant_string(&var1, "rere");
-  variant_t var2;
-  init_variant_bool(&var2, true);
+  variant_t var1("rere");
+  variant_t var2(true);
   vector_t<variant_t> vec2(2); 
   vec2.add_back(var1);
   vec2.add_back(var2);
@@ -54,10 +52,8 @@ int main() {
   l1.print_reverse();
 
   list_t<variant_t> l2;
-  variant_t vnum;
-  init_variant_number(&vnum, 56);
-  variant_t vbool;
-  init_variant_bool(&vbool, true);
+  variant_t vnum(56u);
+  variant_t vbool(true);
   l2.add_back(vnum);
   l2.add_back(vbool);
   l2.add_front(vnum);

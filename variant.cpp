@@ -1,31 +1,31 @@
 #include <stdio.h>
 #include "variant.h"
 
-void init_variant_string(variant_t* pvar, const char* str) {
-  pvar->type = VARIANT_STR;
-  pvar->info.str = str;
+variant_t::variant_t(const char* str) 
+    : type(VARIANT_STR) {
+  info.str = str;
 }
 
-void init_variant_number(variant_t* pvar, uint32_t num) {
-  pvar->type = VARIANT_NUM;
-  pvar->info.num = num;
+variant_t::variant_t(uint32_t num)
+    : type(VARIANT_NUM) {
+  info.num = num;
 }
 
-void init_variant_bool(variant_t* pvar, bool bln) {
-  pvar->type = VARIANT_BLN;
-  pvar->info.bln = bln;
+variant_t::variant_t(bool bln)
+    :type(VARIANT_BLN) {
+  info.bln = bln;
 }
 
-void variant_print(const variant_t* var) {
-  switch (var->type) {
+void variant_t::print() const {
+  switch (type) {
     case VARIANT_STR:
-      printf("\"%s\"", var->info.str);
+      printf("\"%s\"", info.str);
       break;
     case VARIANT_NUM:
-      printf("%u", var->info.num);
+      printf("%u", info.num);
       break;
     case VARIANT_BLN:
-      printf("%s", var->info.bln ? "true" : "false");
+      printf("%s", info.bln ? "true" : "false");
       break;
   }
 } 
