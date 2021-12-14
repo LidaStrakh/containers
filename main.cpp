@@ -8,12 +8,23 @@
 #include "variant.h"
 #include "print.h"
 #include "list.h"
+#include "tree.h"
 
 
 static const uint32_t ARR_SIZE = 5;
 
 int main() {
   printf("Hello World!\n");
+
+  tree_t<uint32_t> t1;
+  t1.add(42);
+  t1.add(32);
+  t1.add(16);
+  t1.add(8);
+  t1.add(22);
+  t1.add(2);
+  t1.print_preorder();
+  t1.print_postorder();
 
   vector_t<uint32_t> vec1;
   vec1.add_back(36);
