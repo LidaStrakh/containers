@@ -21,6 +21,7 @@ public:
   void add(const T& elem); 
   void print_preorder() const;
   void print_postorder() const;
+  void print_inorder() const;
 };
 
 template<typename T>
@@ -98,6 +99,24 @@ void tree_t<T>::print_postorder() const {
   tree_print_postorder(root);
   printf("\n");
 }
+
+template<typename T>
+void tree_print_inorder(tree_elem_t<T>* node) {
+  if (node == nullptr) {
+    return;
+  }
+  tree_print_inorder(node->left);
+  print(node->elem);
+  printf(" ");
+  tree_print_inorder(node->right);
+}
+
+template<typename T>
+void tree_t<T>::print_inorder() const {
+  printf("Tree inorder: ");
+  tree_print_inorder(root);
+  printf("\n");
+}
  
 // TODO: implement:
 //   void tree_print_level_order(const tree_t* root);
@@ -105,6 +124,5 @@ void tree_t<T>::print_postorder() const {
 //   void tree_print_preorder_iterative(const tree_t* root);
 //   void tree_print_postorder_iterative(const tree_t* root);
 //   void tree_print_inorder_iterative(const tree_t* root);
-//   void tree_print_inorder(const tree_t* root);
 
 #endif // _TREE_H_

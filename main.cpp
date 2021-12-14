@@ -25,6 +25,7 @@ int main() {
   t1.add(2);
   t1.print_preorder();
   t1.print_postorder();
+  t1.print_inorder();
 
   vector_t<uint32_t> vec1;
   vec1.add_back(36);
