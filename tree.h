@@ -25,20 +25,16 @@ public:
 
 template<typename T>
 void free_rec(tree_elem_t<T>* node) {
-  if ((node->left) != nullptr) {
-    free_rec(node->left);
+  if (node == nullptr) {
+    return;
   }
-  if ((node->right) != nullptr) {
-    free_rec(node->right);
-  }
+  free_rec(node->left);
+  free_rec(node->right);
   free(node);
 }
 
 template<typename T>
 tree_t<T>::~tree_t() {
-  if (root == nullptr) {
-    return;
-  }  
   free_rec(root);
 }
 
