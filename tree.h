@@ -30,7 +30,7 @@ void free_rec(tree_elem_t<T>* node) {
   }
   free_rec(node->left);
   free_rec(node->right);
-  free(node);
+  delete node;
 }
 
 template<typename T>
@@ -39,17 +39,8 @@ tree_t<T>::~tree_t() {
 }
 
 template<typename T>
-tree_elem_t<T>* make_tree_node(T elem) {
-  tree_elem_t<T>* const node = (tree_elem_t<T>*)malloc(sizeof(tree_elem_t<T>));
-  node->elem = elem;
-  node->left = nullptr;
-  node->right = nullptr;
-  return node;
-}
-
-template<typename T>
 void tree_t<T>::add(const T& elem) {
-  tree_elem_t<T>* node = make_tree_node(elem);
+  tree_elem_t<T>* node = new tree_elem_t<T>(elem);
 
   if (root == nullptr) {
     root = node;

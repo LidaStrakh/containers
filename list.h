@@ -9,15 +9,9 @@
 template<typename T> struct list_elem_t {
   T elem;
   list_elem_t<T>* next;
-};
 
-template<typename T>
-static list_elem_t<T>* make_list_elem(const T& elem, list_elem_t<T>* next) {
-  list_elem_t<T>* e = (list_elem_t<T>*)malloc(sizeof(list_elem_t<T>));
-  e->elem = elem;
-  e->next = next;
-  return e;
-}
+  list_elem_t(const T& t, list_elem_t<T>* next): elem(t), next(next) {}
+};
 
 template<typename T>
 class list_t {
@@ -40,21 +34,21 @@ template<typename T>
 list_t<T>::~list_t() {
   for (list_elem_t<T>* p = this->head; p != nullptr;) {
     list_elem_t<T>* q = p->next;
-    free(p);
+    delete p;
     p = q;
   }
 }
 
 template<typename T>
 void list_t<T>::add_back(const T& elem) {
-  list_elem_t<T>* l = make_list_elem<T>(elem, nullptr);
+  list_elem_t<T>* l = new list_elem_t<T>(elem, nullptr);
   *this->ptail = l;
   this->ptail = &l->next;
 }
 
 template<typename T>
 void list_t<T>::add_front(const T& elem) {
-  list_elem_t<T>* l = make_list_elem(elem, this->head);
+  list_elem_t<T>* l = new list_elem_t<T>(elem, this->head);
   this->head = l;
   if (l->next == nullptr) {
     this->ptail = &l->next;
