@@ -31,6 +31,7 @@ int main() {
   vec1.add_back(36);
   vec1.add_back(13);
   vec1.add_back(53);
+  vec1[0] = 23;
   vec1.print();
 
   variant_t var1("rere");

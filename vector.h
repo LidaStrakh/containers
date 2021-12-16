@@ -3,44 +3,82 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include <assert.h>
 #include "print.h"
 
 template<typename T>
 class vector_t {
 private:
-  T* elements;
-  size_t capacity;
-  size_t size;
+  T* elements_;
+  size_t capacity_;
+  size_t size_;
 public:
-  vector_t(): elements(nullptr), capacity(0), size(0) {}
+  vector_t(): elements_(nullptr), capacity_(0), size_(0) {}
   vector_t(size_t cap)
-    : elements((T*)malloc(cap*sizeof(T)))
-    , capacity(cap)
-    , size(0)
+    : elements_((T*)malloc(cap*sizeof(T)))
+    , capacity_(cap)
+    , size_(0)
   {}
 
   ~vector_t() {
-    free(elements);
+    free(elements_);
   };
 
+  size_t size() const {return size_;}
+
+  const T& operator[](size_t index) const;
+  const T& front() const;
+  const T& back() const;
+  T& operator[](size_t index);
   void add_back(const T& elem);
+  void remove_back();
   void print() const;
 };
 
 template<typename T>
+const T& vector_t<T>::operator[](size_t index) const {
+  assert(index < size_);
+  return elements_[index];
+}
+
+template<typename T>
+T& vector_t<T>::operator[](size_t index) {
+  assert(index < size_);
+  return elements_[index];
+}
+
+template<typename T>
+const T& vector_t<T>::back() const {
+  assert(size_ != 0);
+  return elements_[size_ - 1];
+}
+
+template<typename T>
+const T& vector_t<T>::front() const {
+  assert(size_ != 0);
+  return elements_[0];
+}
+
+template<typename T>
 void vector_t<T>::add_back(const T& elem) {
-  if (capacity <= size) {
-    size_t new_capacity = capacity == 0 ? 1 : capacity * 2; 
+  if (capacity_ <= size_) {
+    size_t new_capacity = capacity_ == 0 ? 1 : capacity_ * 2;
     T* new_elements = (T*)malloc(new_capacity*sizeof(T)); 
-    for (size_t i = 0; i != size; ++i) {
-      new_elements[i] = elements[i];
+    for (size_t i = 0; i != size_; ++i) {
+      new_elements[i] = elements_[i];
     }
-    free(elements);
-    elements = new_elements;
-    capacity = new_capacity;
+    free(elements_);
+    elements_ = new_elements;
+    capacity_ = new_capacity;
   }
-  elements[size] = elem;
-  ++size;
+  elements_[size_] = elem;
+  ++size_;
+}
+
+template<typename T>
+void vector_t<T>::remove_back() {
+  assert(size_ != 0);
+  --size_;
 }
 
 template<typename T>
@@ -51,9 +89,9 @@ void print(const vector_t<T>& vec) {
 template<typename T>
 void vector_t<T>::print() const {
   printf("{");
-  for (uint32_t i = 0; i < size; ++i) {
-    ::print(elements[i]);
-    if (i < size - 1) {
+  for (uint32_t i = 0; i < size_; ++i) {
+    ::print(elements_[i]);
+    if (i < size_ - 1) {
       printf(", ");
     }
   }
