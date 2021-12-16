@@ -6,5 +6,6 @@
 
 void print(uint32_t num);
 void print(const variant_t& var);
+void print(const void* ptr);
 
 #endif // _PRINT_H_

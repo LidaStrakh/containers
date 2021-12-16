@@ -9,3 +9,7 @@ void print(uint32_t num) {
 void print(const variant_t& var) {
   var.print();
 }
+
+void print(const void* ptr) {
+  printf("%p", ptr);
+}
