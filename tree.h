@@ -1,6 +1,8 @@
 #ifndef _TREE_H_
 #define _TREE_H_
 
+#include "vector.h"
+
 template<typename T>
 class tree_elem_t {
 public:
@@ -14,14 +16,16 @@ template<typename T>
 class tree_t {
 private:
   tree_elem_t<T>* root;
+  size_t size_;
 public:
-  tree_t(): root(nullptr) {}
+  tree_t(): root(nullptr), size_(0) {}
   ~tree_t();
-  
+  size_t size() const;
   void add(const T& elem); 
   void print_preorder() const;
   void print_postorder() const;
   void print_inorder() const;
+  void print_preorder_iterative() const;
 };
 
 template<typename T>
@@ -42,7 +46,7 @@ tree_t<T>::~tree_t() {
 template<typename T>
 void tree_t<T>::add(const T& elem) {
   tree_elem_t<T>* node = new tree_elem_t<T>(elem);
-
+  ++size_;
   if (root == nullptr) {
     root = node;
   } else {
@@ -62,6 +66,11 @@ void tree_t<T>::add(const T& elem) {
       }
     } 
   }
+}
+
+template<typename T>
+size_t tree_t<T>::size() const {
+  return size_;
 }
 
 template<typename T>
@@ -117,11 +126,41 @@ void tree_t<T>::print_inorder() const {
   tree_print_inorder(root);
   printf("\n");
 }
- 
+
+template<typename T>
+void tree_t<T>::print_preorder_iterative() const {
+  vector_t<const tree_elem_t<T>*> stack(size());
+  printf("Tree preorder iterative: ");
+
+  stack.add_back(root);
+
+  for(; stack.size() != 0;) {
+    const tree_elem_t<T>* node = stack.back();
+    stack.remove_back();
+    if (node == nullptr) {
+      continue;
+    }
+    print(node->elem);
+    printf(" ");
+    stack.add_back(node->right);
+    stack.add_back(node->left);
+  }
+  printf("\n");
+}
+
+//         42
+//        /
+//       32
+//      /
+//     16
+//    /  \
+//   8   22
+//  /
+// 2
+
 // TODO: implement:
 //   void tree_print_level_order(const tree_t* root);
 //   void tree_print_levels(const tree_t* root);
-//   void tree_print_preorder_iterative(const tree_t* root);
 //   void tree_print_postorder_iterative(const tree_t* root);
 //   void tree_print_inorder_iterative(const tree_t* root);
 
