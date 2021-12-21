@@ -18,8 +18,9 @@ int main() {
 
   tree_t<uint32_t> t1;
   t1.add(42);
-  t1.add(32);
   t1.add(16);
+  t1.add(32);
+  t1.add(40);
   t1.add(8);
   t1.add(22);
   t1.add(2);
@@ -27,6 +28,7 @@ int main() {
   t1.print_postorder();
   t1.print_inorder();
   t1.print_preorder_iterative();
+  t1.print_postorder_iterative();
 
   vector_t<uint32_t> vec1;
   vec1.add_back(36);

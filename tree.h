@@ -26,6 +26,7 @@ public:
   void print_postorder() const;
   void print_inorder() const;
   void print_preorder_iterative() const;
+  void print_postorder_iterative() const;
 };
 
 template<typename T>
@@ -134,7 +135,7 @@ void tree_t<T>::print_preorder_iterative() const {
 
   stack.add_back(root);
 
-  for(; stack.size() != 0;) {
+  for (; stack.size() != 0;) {
     const tree_elem_t<T>* node = stack.back();
     stack.remove_back();
     if (node == nullptr) {
@@ -148,15 +149,50 @@ void tree_t<T>::print_preorder_iterative() const {
   printf("\n");
 }
 
+template<typename T>
+struct stack_item_t {
+  const tree_elem_t<T>* node;
+  bool down;
+};
+
+template<typename T>
+void tree_t<T>::print_postorder_iterative() const {
+  printf("Tree postorder iterative: ");
+
+  // Allocate stack size equal to twice the size of the tree
+  // because we put nullptr children on stack as well.
+  vector_t<stack_item_t<T>> stack(size() * 2);
+  stack_item_t<T> si0 = {root, true};
+  stack.add_back(si0);
+
+  for (; stack.size() != 0;) {
+    const tree_elem_t<T>* node = stack.back().node;
+    bool down = stack.back().down;
+    if (node == nullptr) {
+      stack.remove_back();
+    } else if (down) {
+      stack[stack.size() - 1].down = false;
+      stack_item_t<T> sir = {node->right, true};
+      stack.add_back(sir);
+      stack_item_t<T> sil = {node->left, true};
+      stack.add_back(sil);
+    } else {
+      print(node->elem);
+      printf(" ");
+      stack.remove_back();
+    }
+  }
+
+  printf("\n");
+}
+
 //         42
 //        /
-//       32
-//      /
-//     16
-//    /  \
-//   8   22
-//  /
-// 2
+//       16
+//      /  \
+//     8   32
+//    /    / \
+//   2    22  40
 
 // TODO: implement:
 //   void tree_print_level_order(const tree_t* root);
