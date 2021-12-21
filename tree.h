@@ -150,39 +150,35 @@ void tree_t<T>::print_preorder_iterative() const {
 }
 
 template<typename T>
-struct stack_item_t {
-  const tree_elem_t<T>* node;
-  bool down;
-};
-
-template<typename T>
 void tree_t<T>::print_postorder_iterative() const {
   printf("Tree postorder iterative: ");
 
   // Allocate stack size equal to twice the size of the tree
   // because we put nullptr children on stack as well.
-  vector_t<stack_item_t<T>> stack(size() * 2);
-  stack_item_t<T> si0 = {root, true};
-  stack.add_back(si0);
+  vector_t<const tree_elem_t<T>*> stack(size() * 2);
+  stack.add_back(root);
+  const tree_elem_t<T>* last = root;
 
   for (; stack.size() != 0;) {
-    const tree_elem_t<T>* node = stack.back().node;
-    bool down = stack.back().down;
+    const tree_elem_t<T>* node = stack.back();
     if (node == nullptr) {
+      assert(last == nullptr);
       stack.remove_back();
-    } else if (down) {
-      stack[stack.size() - 1].down = false;
-      stack_item_t<T> sir = {node->right, true};
-      stack.add_back(sir);
-      stack_item_t<T> sil = {node->left, true};
-      stack.add_back(sil);
-    } else {
+    } else if (last == node->right) {
+      // this also covers the case when both children are nullptr
       print(node->elem);
       printf(" ");
+      last = node;
       stack.remove_back();
+    } else if (last == node->left) {
+      assert(last != nullptr || node->right != nullptr);
+      stack.add_back(node->right);
+      last = node->right;
+    } else {
+      stack.add_back(node->left);
+      last = node->left;
     }
   }
-
   printf("\n");
 }
 
