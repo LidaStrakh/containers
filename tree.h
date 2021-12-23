@@ -88,7 +88,7 @@ void tree_print_preorder(const tree_elem_t<T>* node) {
 
 template<typename T>
 void tree_t<T>::print_preorder() const {
-  printf("Tree preorder: ");
+  printf("Tree %-20s ", "preorder recursive:");
   tree_print_preorder(root);
   printf("\n");
 }
@@ -106,7 +106,7 @@ void tree_print_postorder(const tree_elem_t<T>* node) {
 
 template<typename T>
 void tree_t<T>::print_postorder() const {
-  printf("Tree postorder: ");
+  printf("Tree %-20s ", "postorder recursive:");
   tree_print_postorder(root);
   printf("\n");
 }
@@ -124,7 +124,7 @@ void tree_print_inorder(tree_elem_t<T>* node) {
 
 template<typename T>
 void tree_t<T>::print_inorder() const {
-  printf("Tree inorder: ");
+  printf("Tree %-20s ", "inorder recursive:");
   tree_print_inorder(root);
   printf("\n");
 }
@@ -132,7 +132,7 @@ void tree_t<T>::print_inorder() const {
 template<typename T>
 void tree_t<T>::print_preorder_iterative() const {
   vector_t<const tree_elem_t<T>*> stack(size());
-  printf("Tree preorder iterative: ");
+  printf("Tree %-20s ", "preorder iterative:");
 
   stack.add_back(root);
 
@@ -152,7 +152,7 @@ void tree_t<T>::print_preorder_iterative() const {
 
 template<typename T>
 void tree_t<T>::print_postorder_iterative() const {
-  printf("Tree postorder iterative: ");
+  printf("Tree %-20s ", "postorder iterative:");
 
   // Allocate stack size equal to twice the size of the tree
   // because we put nullptr children on stack as well.
@@ -185,7 +185,7 @@ void tree_t<T>::print_postorder_iterative() const {
 
 template<typename T>
 void tree_t<T>::print_inorder_iterative() const {
-  printf("Tree inorder iterative: ");
+  printf("Tree %-20s ", "inorder iterative:");
   vector_t<const tree_elem_t<T>*>stack(size() * 2);
   bool down = true;
   stack.add_back(root);
@@ -206,14 +206,6 @@ void tree_t<T>::print_inorder_iterative() const {
   }
   printf("\n");
 }
-
-//         42
-//        /
-//       16
-//      /  \
-//     8   32
-//    /    / \
-//   2    22  40
 
 // TODO: implement:
 //   void tree_print_level_order(const tree_t* root);

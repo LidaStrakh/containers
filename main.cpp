@@ -13,8 +13,21 @@
 
 static const uint32_t ARR_SIZE = 5;
 
+
 int main() {
   printf("Hello World!\n");
+  
+  /*
+        42
+        /
+       16
+      /  \
+     8   32
+    /    / \
+   2    22  40
+       / \
+      21  23     
+  */
 
   tree_t<uint32_t> t1;
   t1.add(42);
@@ -23,14 +36,16 @@ int main() {
   t1.add(40);
   t1.add(8);
   t1.add(22);
+  t1.add(21);
+  t1.add(23);
   t1.add(2);
   t1.print_preorder();
-  t1.print_postorder();
-  t1.print_inorder();
   t1.print_preorder_iterative();
+  t1.print_postorder();
   t1.print_postorder_iterative();
+  t1.print_inorder();
   t1.print_inorder_iterative();
-
+  
   vector_t<uint32_t> vec1;
   vec1.add_back(36);
   vec1.add_back(13);
