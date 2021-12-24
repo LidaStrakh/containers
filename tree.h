@@ -28,6 +28,7 @@ public:
   void print_preorder_iterative() const;
   void print_postorder_iterative() const;
   void print_inorder_iterative() const;
+  void print_level_order() const;
 };
 
 template<typename T>
@@ -207,8 +208,42 @@ void tree_t<T>::print_inorder_iterative() const {
   printf("\n");
 }
 
+template<typename T>
+void tree_t<T>::print_level_order() const {
+  printf("Tree %-20s ", "level order:");
+  vector_t<const tree_elem_t<T>*> queue(size());
+  size_t head = 0;
+  if (root != nullptr) {
+    queue.add_back(root);
+  }
+  for (; head < queue.size(); ++head) {
+    const tree_elem_t<T>* node = queue[head];
+    if (node->left != nullptr) {
+      queue.add_back(node->left);
+    }
+    if (node->right != nullptr) {
+      queue.add_back(node->right);
+    }
+    print(node->elem);
+    printf(" ");
+  }
+  printf("\n");
+}
+
+  /*
+        42
+        /
+       16
+      /  \
+     8   32
+    /    / \
+   2    22  40
+       / \
+      21  23
+  */
+
+
 // TODO: implement:
-//   void tree_print_level_order(const tree_t* root);
 //   void tree_print_levels(const tree_t* root);
 
 #endif // _TREE_H_
