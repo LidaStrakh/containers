@@ -132,7 +132,7 @@ void tree_t<T>::print_inorder() const {
 
 template<typename T>
 void tree_t<T>::print_preorder_iterative() const {
-  vector_t<const tree_elem_t<T>*> stack(size());
+  vector_t<const tree_elem_t<T>*> stack;
   printf("Tree %-20s ", "preorder iterative:");
 
   stack.add_back(root);
@@ -155,9 +155,7 @@ template<typename T>
 void tree_t<T>::print_postorder_iterative() const {
   printf("Tree %-20s ", "postorder iterative:");
 
-  // Allocate stack size equal to twice the size of the tree
-  // because we put nullptr children on stack as well.
-  vector_t<const tree_elem_t<T>*> stack(size() * 2);
+  vector_t<const tree_elem_t<T>*> stack;
   stack.add_back(root);
   const tree_elem_t<T>* last = root;
 
@@ -187,7 +185,7 @@ void tree_t<T>::print_postorder_iterative() const {
 template<typename T>
 void tree_t<T>::print_inorder_iterative() const {
   printf("Tree %-20s ", "inorder iterative:");
-  vector_t<const tree_elem_t<T>*>stack(size() * 2);
+  vector_t<const tree_elem_t<T>*> stack;
   bool down = true;
   stack.add_back(root);
   for (; stack.size() != 0;) {
@@ -211,6 +209,8 @@ void tree_t<T>::print_inorder_iterative() const {
 template<typename T>
 void tree_t<T>::print_level_order() const {
   printf("Tree %-20s ", "level order:");
+  // Allocate memory equal to the size of the tree as
+  // all tree nodes will be in the queue at same time.
   vector_t<const tree_elem_t<T>*> queue(size());
   size_t head = 0;
   if (root != nullptr) {
