@@ -255,9 +255,7 @@ void tree_t<T>::print_levels() const {
       pqueue2->add_back(node->right);
     }
     printf("| ");
-    for (size_t i = pqueue1->size(); i > 0; --i) {
-      pqueue1->remove_back();
-    }
+    pqueue1->clear();
     queue_t* p = pqueue1;
     pqueue1 = pqueue2;
     pqueue2 = p;

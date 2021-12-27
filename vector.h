@@ -31,6 +31,7 @@ public:
   const T& back() const;
   T& operator[](size_t index);
   void add_back(const T& elem);
+  void clear();
   void remove_back();
   void print() const;
 };
@@ -73,6 +74,11 @@ void vector_t<T>::add_back(const T& elem) {
   }
   elements_[size_] = elem;
   ++size_;
+}
+
+template<typename T>
+void vector_t<T>::clear() {
+  size_ = 0;
 }
 
 template<typename T>
