@@ -47,6 +47,7 @@ int main() {
   t1.print_inorder();
   t1.print_inorder_iterative();
   t1.print_level_order();
+  t1.print_levels();
   
   vector_t<uint32_t> vec1;
   vec1.add_back(36);

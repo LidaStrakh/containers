@@ -29,6 +29,7 @@ public:
   void print_postorder_iterative() const;
   void print_inorder_iterative() const;
   void print_level_order() const;
+  void print_levels() const;
 };
 
 template<typename T>
@@ -230,20 +231,38 @@ void tree_t<T>::print_level_order() const {
   printf("\n");
 }
 
-  /*
-        42
-        /
-       16
-      /  \
-     8   32
-    /    / \
-   2    22  40
-       / \
-      21  23
-  */
+template<typename T>
+void tree_t<T>::print_levels() const {
+  printf("Tree %-20s ", "levels:");
 
+  typedef vector_t<const tree_elem_t<T>*> queue_t;
+  queue_t queue1;
+  queue_t queue2;
+  queue_t* pqueue1 = &queue1;
+  queue_t* pqueue2 = &queue2;
 
-// TODO: implement:
-//   void tree_print_levels(const tree_t* root);
+  pqueue1->add_back(root);
+  for (; pqueue1->size() > 0;) {
+    assert(pqueue2->size() == 0);
+    for (size_t i = 0; i < pqueue1->size(); ++i) {
+      const tree_elem_t<T>* node = (*pqueue1)[i];
+      if (node == nullptr) {
+        continue;
+      }
+      print(node->elem);
+      printf(" ");
+      pqueue2->add_back(node->left);
+      pqueue2->add_back(node->right);
+    }
+    printf("| ");
+    for (size_t i = pqueue1->size(); i > 0; --i) {
+      pqueue1->remove_back();
+    }
+    queue_t* p = pqueue1;
+    pqueue1 = pqueue2;
+    pqueue2 = p;
+  }
+  printf("\n");
+}
 
 #endif // _TREE_H_
