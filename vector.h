@@ -35,6 +35,7 @@ public:
   void remove_back();
   bool empty() const;
   void print() const;
+  T min_element() const;
 };
 
 template<typename T>
@@ -108,6 +109,19 @@ void vector_t<T>::print() const {
     }
   }
   printf("}\n");
+}
+
+template<typename T>
+T vector_t<T>::min_element() const {
+  assert(!empty());
+  T min = (*this)[0];
+  for (size_t i = 1; i < size(); ++i) {
+    const T& e = (*this)[i];
+    if (e < min) {
+      min = e;
+    } 
+  }
+  return min;
 }
 
 #endif // _VECTOR_H_

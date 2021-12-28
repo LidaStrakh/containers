@@ -53,8 +53,14 @@ int main() {
   vec1.add_back(36);
   vec1.add_back(13);
   vec1.add_back(53);
-  vec1[0] = 23;
+  vec1.add_back(2);
+  vec1.add_back(47);
+  vec1.add_back(98);
+  vec1.add_back(67);
   vec1.print();
+  uint32_t y = vec1.min_element();
+
+  printf("Min element: %u\n", y);
 
   variant_t var1("rere");
   variant_t var2(true);
