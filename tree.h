@@ -138,7 +138,7 @@ void tree_t<T>::print_preorder_iterative() const {
 
   stack.add_back(root);
 
-  for (; stack.size() != 0;) {
+  for (; !stack.empty();) {
     const tree_elem_t<T>* node = stack.back();
     stack.remove_back();
     if (node == nullptr) {
@@ -160,7 +160,7 @@ void tree_t<T>::print_postorder_iterative() const {
   stack.add_back(root);
   const tree_elem_t<T>* last = root;
 
-  for (; stack.size() != 0;) {
+  for (; !stack.empty();) {
     const tree_elem_t<T>* node = stack.back();
     if (node == nullptr) {
       assert(last == nullptr);
@@ -189,7 +189,7 @@ void tree_t<T>::print_inorder_iterative() const {
   vector_t<const tree_elem_t<T>*> stack;
   bool down = true;
   stack.add_back(root);
-  for (; stack.size() != 0;) {
+  for (; !stack.empty();) {
     const tree_elem_t<T>* node = stack.back();
     if (node == nullptr) {
       down = false;

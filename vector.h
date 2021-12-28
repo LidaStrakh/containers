@@ -33,6 +33,7 @@ public:
   void add_back(const T& elem);
   void clear();
   void remove_back();
+  bool empty() const;
   void print() const;
 };
 
@@ -85,6 +86,11 @@ template<typename T>
 void vector_t<T>::remove_back() {
   assert(size_ != 0);
   --size_;
+}
+
+template<typename T>
+bool vector_t<T>::empty() const {
+  return size_ == 0;
 }
 
 template<typename T>
