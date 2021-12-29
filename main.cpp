@@ -57,10 +57,16 @@ int main() {
   vec1.add_back(47);
   vec1.add_back(98);
   vec1.add_back(67);
+  vec1.add_back(13);
   vec1.print();
-  uint32_t y = vec1.min_element();
+  printf("Min element: %u\n", vec1.min_element());
+  printf("Max element: %u\n", vec1.max_element());
+  vec1.sort();
+  vec1.print();
 
-  printf("Min element: %u\n", y);
+  vector_t<uint32_t> vec0;
+  vec0.sort();
+  vec0.print();
 
   variant_t var1("rere");
   variant_t var2(true);

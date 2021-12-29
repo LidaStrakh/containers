@@ -36,6 +36,8 @@ public:
   bool empty() const;
   void print() const;
   T min_element() const;
+  T max_element() const;
+  void sort();
 };
 
 template<typename T>
@@ -114,14 +116,48 @@ void vector_t<T>::print() const {
 template<typename T>
 T vector_t<T>::min_element() const {
   assert(!empty());
-  T min = (*this)[0];
+  T min = elements_[0];
   for (size_t i = 1; i < size(); ++i) {
-    const T& e = (*this)[i];
+    const T& e = elements_[i];
     if (e < min) {
       min = e;
-    } 
+    }
   }
   return min;
+}
+
+template<typename T>
+T vector_t<T>::max_element() const {
+  assert(!empty());
+  T max = elements_[0];
+  for (size_t i = 1; i < size(); ++i) {
+    const T& e = elements_[i];
+    if (max < e) {
+      max = e;
+    }
+  }
+  return max;
+}
+
+template<typename T>
+void vector_t<T>::sort() {
+  if (empty()) {
+    return;
+  }
+  for (size_t j = 0; j < size() - 1; ++j) {
+    T max = elements_[0];
+    size_t max_index = 0;
+    for (size_t i = 1; i < size() - j; ++i) {
+      const T& e = elements_[i];
+      if (max < e) {
+        max = e;
+        max_index = i;
+      }
+    }
+    T tmp = elements_[size() - 1 -j];
+    elements_[size() - 1 - j] = max;
+    elements_[max_index] = tmp;
+  }
 }
 
 #endif // _VECTOR_H_
