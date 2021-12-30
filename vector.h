@@ -141,21 +141,18 @@ T vector_t<T>::max_element() const {
 
 template<typename T>
 void vector_t<T>::sort() {
-  if (empty()) {
-    return;
-  }
-  for (size_t j = 0; j < size() - 1; ++j) {
+  for (size_t j = size(); j > 1; --j) {
     T max = elements_[0];
     size_t max_index = 0;
-    for (size_t i = 1; i < size() - j; ++i) {
+    for (size_t i = 1; i < j; ++i) {
       const T& e = elements_[i];
       if (max < e) {
         max = e;
         max_index = i;
       }
     }
-    T tmp = elements_[size() - 1 -j];
-    elements_[size() - 1 - j] = max;
+    T tmp = elements_[j - 1];
+    elements_[j - 1] = max;
     elements_[max_index] = tmp;
   }
 }
