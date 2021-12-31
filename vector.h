@@ -37,7 +37,7 @@ public:
   void print() const;
   T min_element() const;
   T max_element() const;
-  void sort();
+  void bubble_sort();
 };
 
 template<typename T>
@@ -140,20 +140,28 @@ T vector_t<T>::max_element() const {
 }
 
 template<typename T>
-void vector_t<T>::sort() {
+void swap(T& x, T& y) {
+  T tmp = x;
+  x = y;
+  y = tmp;
+}
+
+// Bubble sort has complexity O(n^2) where n is the size of the array.
+// The index of the outer loop changes from size down to 2. For every
+// iteration of the outer loop the inner loop iterates from 1 up to
+// the index of the outer loop. Therefore the total number of iterations
+// can be counted as:
+//  1 + 2 + 3 + ... + (n - 2) + (n - 1) =
+//    = (1 + (n - 1)) + (2 + (n - 2)) + ... =
+//    = n*(n-1)/2
+template<typename T>
+void vector_t<T>::bubble_sort() {
   for (size_t j = size(); j > 1; --j) {
-    T max = elements_[0];
-    size_t max_index = 0;
     for (size_t i = 1; i < j; ++i) {
-      const T& e = elements_[i];
-      if (max < e) {
-        max = e;
-        max_index = i;
+      if (elements_[i] < elements_[i - 1]) {
+        swap(elements_[i], elements_[i - 1]);
       }
     }
-    T tmp = elements_[j - 1];
-    elements_[j - 1] = max;
-    elements_[max_index] = tmp;
   }
 }
 

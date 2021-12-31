@@ -61,11 +61,11 @@ int main() {
   vec1.print();
   printf("Min element: %u\n", vec1.min_element());
   printf("Max element: %u\n", vec1.max_element());
-  vec1.sort();
+  vec1.bubble_sort();
   vec1.print();
 
   vector_t<uint32_t> vec0;
-  vec0.sort();
+  vec0.bubble_sort();
   vec0.print();
 
   variant_t var1("rere");
