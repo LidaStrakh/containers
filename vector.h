@@ -37,7 +37,7 @@ public:
   void print() const;
   T min_element() const;
   T max_element() const;
-  void bubble_sort();
+  template<bool debug = false> void bubble_sort();
 };
 
 template<typename T>
@@ -155,13 +155,27 @@ void swap(T& x, T& y) {
 //    = (1 + (n - 1)) + (2 + (n - 2)) + ... =
 //    = n*(n-1)/2
 template<typename T>
+template<bool debug>
 void vector_t<T>::bubble_sort() {
+  size_t iters = 0;
   for (size_t j = size(); j > 1; --j) {
+    bool swapped = false;
     for (size_t i = 1; i < j; ++i) {
+      if (debug) {
+        ++iters;
+      }
       if (elements_[i] < elements_[i - 1]) {
+        swapped = true;
         swap(elements_[i], elements_[i - 1]);
       }
     }
+    if (!swapped) {
+      goto end;
+    }
+  }
+end:
+  if (debug) {
+    printf("Bubble sort: iterations %lu\n", iters);
   }
 }
 

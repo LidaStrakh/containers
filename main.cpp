@@ -57,12 +57,27 @@ int main() {
   vec1.add_back(47);
   vec1.add_back(98);
   vec1.add_back(67);
-  vec1.add_back(13);
+  vec1.add_back(11);
   vec1.print();
   printf("Min element: %u\n", vec1.min_element());
   printf("Max element: %u\n", vec1.max_element());
-  vec1.bubble_sort();
+  vec1.bubble_sort<true>();
   vec1.print();
+
+  vec1[vec1.size() - 1] = 1;
+  vec1.bubble_sort<true>();
+  vec1.print();
+
+  vec1[0] = 130;
+  vec1.bubble_sort<true>();
+  vec1.print();
+
+  vector_t<uint32_t> vec3;
+  for (size_t i = 0; i != 5; ++i) {
+    vec3.add_back(36);
+  }
+  vec3.bubble_sort<true>();
+  vec3.print();
 
   vector_t<uint32_t> vec0;
   vec0.bubble_sort();
